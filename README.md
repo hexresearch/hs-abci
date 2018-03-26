@@ -42,15 +42,23 @@ Build blockchain applications in Haskell for
 1. `cd $GOPATH`
 1. `go get github.com/tendermint/tmlibs/common`
 1. `go get github.com/gogo/protobuf/gogoproto`
-1.  ```
+1.  `
     protoc --plugin=protoc-gen-haskell=$(which proto-lens-protoc) \
         --haskell_out=../hs-abci/src --proto_path ./src \
         Network/ABCI/types.proto \
         github.com/gogo/protobuf/gogoproto/gogo.proto \
         github.com/tendermint/tmlibs/common/types.proto
-    ```
+    `
 
 
 1. commit files
     - src/Network/ABCI/types.proto
     - src/Proto/Network/ABCI/Types.hs
+
+
+Add `Proto.Google.Protobuf.Descriptor` module
+1. `git clone git@github.com:google/protobuf.git` to `$GOPATH/src/github.com`
+1. `protoc --plugin=protoc-gen-haskell=$(which proto-lens-protoc) \
+        --haskell_out=../hs-abci/src \
+        --proto_path ./src/github.com/protobuf/src/ \
+        google/protobuf/descriptor.proto`
