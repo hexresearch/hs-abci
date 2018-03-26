@@ -39,6 +39,8 @@ library
     , transformers
   default-language:    Haskell2010
   ghc-options:         -Wall
+  default-extensions:
+    OverloadedStrings
 
 executable hs-abci-counter
   hs-source-dirs:      examples
