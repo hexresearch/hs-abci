@@ -29,23 +29,27 @@ import qualified Proto.Github.Com.Gogo.Protobuf.Gogoproto.Gogo
 data KI64Pair = KI64Pair{_KI64Pair'key ::
                          !Data.ByteString.ByteString,
                          _KI64Pair'value :: !Data.Int.Int64}
-              deriving (Prelude.Show, Prelude.Eq)
+              deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "key" f KI64Pair KI64Pair a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _KI64Pair'key
-              (\ x__ y__ -> x__{_KI64Pair'key = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _KI64Pair'key
+                 (\ x__ y__ -> x__{_KI64Pair'key = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "value" f KI64Pair KI64Pair a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _KI64Pair'value
-              (\ x__ y__ -> x__{_KI64Pair'value = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _KI64Pair'value
+                 (\ x__ y__ -> x__{_KI64Pair'value = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default KI64Pair where
         def
@@ -67,7 +71,7 @@ instance Data.ProtoLens.Message KI64Pair where
                       (Data.ProtoLens.PlainField Data.ProtoLens.Optional value)
                       :: Data.ProtoLens.FieldDescriptor KI64Pair
               in
-              Data.ProtoLens.MessageDescriptor
+              Data.ProtoLens.MessageDescriptor (Data.Text.pack "common.KI64Pair")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, key__field_descriptor),
                     (Data.ProtoLens.Tag 2, value__field_descriptor)])
@@ -77,23 +81,27 @@ instance Data.ProtoLens.Message KI64Pair where
 
 data KVPair = KVPair{_KVPair'key :: !Data.ByteString.ByteString,
                      _KVPair'value :: !Data.ByteString.ByteString}
-            deriving (Prelude.Show, Prelude.Eq)
+            deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "key" f KVPair KVPair a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _KVPair'key
-              (\ x__ y__ -> x__{_KVPair'key = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _KVPair'key
+                 (\ x__ y__ -> x__{_KVPair'key = y__}))
+              Prelude.id
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "value" f KVPair KVPair a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _KVPair'value
-              (\ x__ y__ -> x__{_KVPair'value = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _KVPair'value
+                 (\ x__ y__ -> x__{_KVPair'value = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default KVPair where
         def
@@ -115,7 +123,7 @@ instance Data.ProtoLens.Message KVPair where
                       (Data.ProtoLens.PlainField Data.ProtoLens.Optional value)
                       :: Data.ProtoLens.FieldDescriptor KVPair
               in
-              Data.ProtoLens.MessageDescriptor
+              Data.ProtoLens.MessageDescriptor (Data.Text.pack "common.KVPair")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, key__field_descriptor),
                     (Data.ProtoLens.Tag 2, value__field_descriptor)])

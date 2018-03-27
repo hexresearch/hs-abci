@@ -61,6 +61,7 @@ module Network.ABCI.Types (
 ) where
 
 import qualified Proto.Network.ABCI.Types as Proto
+import qualified Proto.Github.Com.Tendermint.Tmlibs.Common.Types as Proto
 
 import           Data.ByteString (ByteString)
 import           Data.Default (Default(def))
@@ -180,11 +181,31 @@ data Response (t :: MsgType) where
     , responseSetOption'log  :: !Text
     } -> Response SetOption
 
+{-
+data ResponseDeliverTx = ResponseDeliverTx{_ResponseDeliverTx'code
+                                           :: !Data.Word.Word32,
+                                           _ResponseDeliverTx'data' :: !Data.ByteString.ByteString,
+                                           _ResponseDeliverTx'log :: !Data.Text.Text,
+                                           _ResponseDeliverTx'info :: !Data.Text.Text,
+                                           _ResponseDeliverTx'gasWanted :: !Data.Int.Int64,
+                                           _ResponseDeliverTx'gasUsed :: !Data.Int.Int64,
+                                           _ResponseDeliverTx'tags ::
+                                           ![Proto.Github.Com.Tendermint.Tmlibs.Common.Types.KVPair],
+                                           _ResponseDeliverTx'fee ::
+                                           !(Prelude.Maybe
+                                               Proto.Github.Com.Tendermint.Tmlibs.Common.Types.KI64Pair)}
+                       deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
+-}
+
   ResponseDeliverTx ::
-    { responseDeliverTx'code :: !CodeType
-    , responseDeliverTx'data :: !ByteString
-    , responseDeliverTx'log  :: !Text
-    , responseDeliverTx'tags :: ![Proto.KVPair]
+    { responseDeliverTx'code      :: !CodeType
+    , responseDeliverTx'data      :: !ByteString
+    , responseDeliverTx'log       :: !Text
+    , responseDeliverTx'info      :: !Text
+    , responseDeliverTx'gasWanted :: !Int64
+    , responseDeliverTx'gasUsed   :: !Int64
+    , responseDeliverTx'tags      :: ![Proto.KVPair]
+    , responseDeliverTx'fee       :: !(Maybe Proto.KI64Pair)
     } -> Response DeliverTx
 
   ResponseCheckTx ::
@@ -285,8 +306,8 @@ toProtoResponse (ResponseInfo d v h ah) =
   def & Proto.info .~ Proto.ResponseInfo d v h ah
 toProtoResponse (ResponseSetOption (CodeType code') log') =
   def & Proto.setOption .~ Proto.ResponseSetOption code' log'
-toProtoResponse (ResponseDeliverTx (CodeType code) data'' log' tags') =
-  def & Proto.deliverTx .~ Proto.ResponseDeliverTx code data'' log' tags'
+toProtoResponse (ResponseDeliverTx (CodeType code) data'' log' info' gasWanted' gasUsed' tags' fee') =
+  def & Proto.deliverTx .~ Proto.ResponseDeliverTx (CodeType code) data'' log' info' gasWanted' gasUsed' tags' fee'
 toProtoResponse (ResponseCheckTx (CodeType code) data'' log' gas' fee') =
   def & Proto.checkTx .~ Proto.ResponseCheckTx code data'' log' gas' fee'
 toProtoResponse (ResponseCommit (CodeType code) data'' log') =

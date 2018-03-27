@@ -29,7 +29,7 @@ import qualified Proto.Github.Com.Tendermint.Tmlibs.Common.Types
 
 data BlockGossip = BlockGossip{_BlockGossip'blockPartSizeBytes ::
                                !Data.Int.Int32}
-                 deriving (Prelude.Show, Prelude.Eq)
+                 deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Int.Int32, b ~ Data.Int.Int32,
           Prelude.Functor f) =>
@@ -38,8 +38,10 @@ instance (a ~ Data.Int.Int32, b ~ Data.Int.Int32,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _BlockGossip'blockPartSizeBytes
-              (\ x__ y__ -> x__{_BlockGossip'blockPartSizeBytes = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _BlockGossip'blockPartSizeBytes
+                 (\ x__ y__ -> x__{_BlockGossip'blockPartSizeBytes = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default BlockGossip where
         def
@@ -57,6 +59,7 @@ instance Data.ProtoLens.Message BlockGossip where
                       :: Data.ProtoLens.FieldDescriptor BlockGossip
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.BlockGossip")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, blockPartSizeBytes__field_descriptor)])
                 (Data.Map.fromList
@@ -65,22 +68,26 @@ instance Data.ProtoLens.Message BlockGossip where
 data BlockID = BlockID{_BlockID'hash ::
                        !Data.ByteString.ByteString,
                        _BlockID'parts :: !(Prelude.Maybe PartSetHeader)}
-             deriving (Prelude.Show, Prelude.Eq)
+             deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "hash" f BlockID BlockID a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _BlockID'hash
-              (\ x__ y__ -> x__{_BlockID'hash = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _BlockID'hash
+                 (\ x__ y__ -> x__{_BlockID'hash = y__}))
+              Prelude.id
 
 instance (a ~ PartSetHeader, b ~ PartSetHeader,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "parts" f BlockID BlockID a b
          where
         lensOf _
-          = (Prelude..) maybe'parts
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _BlockID'parts
+                 (\ x__ y__ -> x__{_BlockID'parts = y__}))
               (Data.ProtoLens.maybeLens Data.Default.Class.def)
 
 instance (a ~ Prelude.Maybe PartSetHeader,
@@ -88,8 +95,10 @@ instance (a ~ Prelude.Maybe PartSetHeader,
          Lens.Labels.HasLens "maybe'parts" f BlockID BlockID a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _BlockID'parts
-              (\ x__ y__ -> x__{_BlockID'parts = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _BlockID'parts
+                 (\ x__ y__ -> x__{_BlockID'parts = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default BlockID where
         def
@@ -111,7 +120,7 @@ instance Data.ProtoLens.Message BlockID where
                       (Data.ProtoLens.OptionalField maybe'parts)
                       :: Data.ProtoLens.FieldDescriptor BlockID
               in
-              Data.ProtoLens.MessageDescriptor
+              Data.ProtoLens.MessageDescriptor (Data.Text.pack "types.BlockID")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, hash__field_descriptor),
                     (Data.ProtoLens.Tag 2, parts__field_descriptor)])
@@ -122,31 +131,37 @@ instance Data.ProtoLens.Message BlockID where
 data BlockSize = BlockSize{_BlockSize'maxBytes :: !Data.Int.Int32,
                            _BlockSize'maxTxs :: !Data.Int.Int32,
                            _BlockSize'maxGas :: !Data.Int.Int64}
-               deriving (Prelude.Show, Prelude.Eq)
+               deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Int.Int32, b ~ Data.Int.Int32,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "maxBytes" f BlockSize BlockSize a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _BlockSize'maxBytes
-              (\ x__ y__ -> x__{_BlockSize'maxBytes = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _BlockSize'maxBytes
+                 (\ x__ y__ -> x__{_BlockSize'maxBytes = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int32, b ~ Data.Int.Int32,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "maxTxs" f BlockSize BlockSize a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _BlockSize'maxTxs
-              (\ x__ y__ -> x__{_BlockSize'maxTxs = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _BlockSize'maxTxs
+                 (\ x__ y__ -> x__{_BlockSize'maxTxs = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "maxGas" f BlockSize BlockSize a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _BlockSize'maxGas
-              (\ x__ y__ -> x__{_BlockSize'maxGas = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _BlockSize'maxGas
+                 (\ x__ y__ -> x__{_BlockSize'maxGas = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default BlockSize where
         def
@@ -175,7 +190,7 @@ instance Data.ProtoLens.Message BlockSize where
                       (Data.ProtoLens.PlainField Data.ProtoLens.Optional maxGas)
                       :: Data.ProtoLens.FieldDescriptor BlockSize
               in
-              Data.ProtoLens.MessageDescriptor
+              Data.ProtoLens.MessageDescriptor (Data.Text.pack "types.BlockSize")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, maxBytes__field_descriptor),
                     (Data.ProtoLens.Tag 2, maxTxs__field_descriptor),
@@ -189,14 +204,16 @@ data ConsensusParams = ConsensusParams{_ConsensusParams'blockSize
                                        :: !(Prelude.Maybe BlockSize),
                                        _ConsensusParams'txSize :: !(Prelude.Maybe TxSize),
                                        _ConsensusParams'blockGossip :: !(Prelude.Maybe BlockGossip)}
-                     deriving (Prelude.Show, Prelude.Eq)
+                     deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ BlockSize, b ~ BlockSize, Prelude.Functor f) =>
          Lens.Labels.HasLens "blockSize" f ConsensusParams ConsensusParams a
            b
          where
         lensOf _
-          = (Prelude..) maybe'blockSize
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ConsensusParams'blockSize
+                 (\ x__ y__ -> x__{_ConsensusParams'blockSize = y__}))
               (Data.ProtoLens.maybeLens Data.Default.Class.def)
 
 instance (a ~ Prelude.Maybe BlockSize, b ~ Prelude.Maybe BlockSize,
@@ -207,14 +224,18 @@ instance (a ~ Prelude.Maybe BlockSize, b ~ Prelude.Maybe BlockSize,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ConsensusParams'blockSize
-              (\ x__ y__ -> x__{_ConsensusParams'blockSize = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ConsensusParams'blockSize
+                 (\ x__ y__ -> x__{_ConsensusParams'blockSize = y__}))
+              Prelude.id
 
 instance (a ~ TxSize, b ~ TxSize, Prelude.Functor f) =>
          Lens.Labels.HasLens "txSize" f ConsensusParams ConsensusParams a b
          where
         lensOf _
-          = (Prelude..) maybe'txSize
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ConsensusParams'txSize
+                 (\ x__ y__ -> x__{_ConsensusParams'txSize = y__}))
               (Data.ProtoLens.maybeLens Data.Default.Class.def)
 
 instance (a ~ Prelude.Maybe TxSize, b ~ Prelude.Maybe TxSize,
@@ -225,8 +246,10 @@ instance (a ~ Prelude.Maybe TxSize, b ~ Prelude.Maybe TxSize,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ConsensusParams'txSize
-              (\ x__ y__ -> x__{_ConsensusParams'txSize = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ConsensusParams'txSize
+                 (\ x__ y__ -> x__{_ConsensusParams'txSize = y__}))
+              Prelude.id
 
 instance (a ~ BlockGossip, b ~ BlockGossip, Prelude.Functor f) =>
          Lens.Labels.HasLens "blockGossip" f ConsensusParams ConsensusParams
@@ -234,7 +257,9 @@ instance (a ~ BlockGossip, b ~ BlockGossip, Prelude.Functor f) =>
            b
          where
         lensOf _
-          = (Prelude..) maybe'blockGossip
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ConsensusParams'blockGossip
+                 (\ x__ y__ -> x__{_ConsensusParams'blockGossip = y__}))
               (Data.ProtoLens.maybeLens Data.Default.Class.def)
 
 instance (a ~ Prelude.Maybe BlockGossip,
@@ -245,8 +270,10 @@ instance (a ~ Prelude.Maybe BlockGossip,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ConsensusParams'blockGossip
-              (\ x__ y__ -> x__{_ConsensusParams'blockGossip = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ConsensusParams'blockGossip
+                 (\ x__ y__ -> x__{_ConsensusParams'blockGossip = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default ConsensusParams where
         def
@@ -276,6 +303,7 @@ instance Data.ProtoLens.Message ConsensusParams where
                       :: Data.ProtoLens.FieldDescriptor ConsensusParams
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.ConsensusParams")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, blockSize__field_descriptor),
                     (Data.ProtoLens.Tag 2, txSize__field_descriptor),
@@ -288,23 +316,27 @@ instance Data.ProtoLens.Message ConsensusParams where
 data Evidence = Evidence{_Evidence'pubKey ::
                          !Data.ByteString.ByteString,
                          _Evidence'height :: !Data.Int.Int64}
-              deriving (Prelude.Show, Prelude.Eq)
+              deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "pubKey" f Evidence Evidence a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Evidence'pubKey
-              (\ x__ y__ -> x__{_Evidence'pubKey = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Evidence'pubKey
+                 (\ x__ y__ -> x__{_Evidence'pubKey = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "height" f Evidence Evidence a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Evidence'height
-              (\ x__ y__ -> x__{_Evidence'height = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Evidence'height
+                 (\ x__ y__ -> x__{_Evidence'height = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default Evidence where
         def
@@ -326,7 +358,7 @@ instance Data.ProtoLens.Message Evidence where
                       (Data.ProtoLens.PlainField Data.ProtoLens.Optional height)
                       :: Data.ProtoLens.FieldDescriptor Evidence
               in
-              Data.ProtoLens.MessageDescriptor
+              Data.ProtoLens.MessageDescriptor (Data.Text.pack "types.Evidence")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, pubKey__field_descriptor),
                     (Data.ProtoLens.Tag 2, height__field_descriptor)])
@@ -342,45 +374,55 @@ data Header = Header{_Header'chainId :: !Data.Text.Text,
                      _Header'dataHash :: !Data.ByteString.ByteString,
                      _Header'validatorsHash :: !Data.ByteString.ByteString,
                      _Header'appHash :: !Data.ByteString.ByteString}
-            deriving (Prelude.Show, Prelude.Eq)
+            deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "chainId" f Header Header a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Header'chainId
-              (\ x__ y__ -> x__{_Header'chainId = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Header'chainId
+                 (\ x__ y__ -> x__{_Header'chainId = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "height" f Header Header a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Header'height
-              (\ x__ y__ -> x__{_Header'height = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Header'height
+                 (\ x__ y__ -> x__{_Header'height = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "time" f Header Header a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Header'time
-              (\ x__ y__ -> x__{_Header'time = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Header'time
+                 (\ x__ y__ -> x__{_Header'time = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int32, b ~ Data.Int.Int32,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "numTxs" f Header Header a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Header'numTxs
-              (\ x__ y__ -> x__{_Header'numTxs = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Header'numTxs
+                 (\ x__ y__ -> x__{_Header'numTxs = y__}))
+              Prelude.id
 
 instance (a ~ BlockID, b ~ BlockID, Prelude.Functor f) =>
          Lens.Labels.HasLens "lastBlockId" f Header Header a b
          where
         lensOf _
-          = (Prelude..) maybe'lastBlockId
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Header'lastBlockId
+                 (\ x__ y__ -> x__{_Header'lastBlockId = y__}))
               (Data.ProtoLens.maybeLens Data.Default.Class.def)
 
 instance (a ~ Prelude.Maybe BlockID, b ~ Prelude.Maybe BlockID,
@@ -388,40 +430,50 @@ instance (a ~ Prelude.Maybe BlockID, b ~ Prelude.Maybe BlockID,
          Lens.Labels.HasLens "maybe'lastBlockId" f Header Header a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Header'lastBlockId
-              (\ x__ y__ -> x__{_Header'lastBlockId = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Header'lastBlockId
+                 (\ x__ y__ -> x__{_Header'lastBlockId = y__}))
+              Prelude.id
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "lastCommitHash" f Header Header a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Header'lastCommitHash
-              (\ x__ y__ -> x__{_Header'lastCommitHash = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Header'lastCommitHash
+                 (\ x__ y__ -> x__{_Header'lastCommitHash = y__}))
+              Prelude.id
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "dataHash" f Header Header a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Header'dataHash
-              (\ x__ y__ -> x__{_Header'dataHash = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Header'dataHash
+                 (\ x__ y__ -> x__{_Header'dataHash = y__}))
+              Prelude.id
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "validatorsHash" f Header Header a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Header'validatorsHash
-              (\ x__ y__ -> x__{_Header'validatorsHash = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Header'validatorsHash
+                 (\ x__ y__ -> x__{_Header'validatorsHash = y__}))
+              Prelude.id
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "appHash" f Header Header a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Header'appHash
-              (\ x__ y__ -> x__{_Header'appHash = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Header'appHash
+                 (\ x__ y__ -> x__{_Header'appHash = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default Header where
         def
@@ -492,7 +544,7 @@ instance Data.ProtoLens.Message Header where
                       (Data.ProtoLens.PlainField Data.ProtoLens.Optional appHash)
                       :: Data.ProtoLens.FieldDescriptor Header
               in
-              Data.ProtoLens.MessageDescriptor
+              Data.ProtoLens.MessageDescriptor (Data.Text.pack "types.Header")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, chainId__field_descriptor),
                     (Data.ProtoLens.Tag 2, height__field_descriptor),
@@ -517,23 +569,27 @@ instance Data.ProtoLens.Message Header where
 data PartSetHeader = PartSetHeader{_PartSetHeader'total ::
                                    !Data.Int.Int32,
                                    _PartSetHeader'hash :: !Data.ByteString.ByteString}
-                   deriving (Prelude.Show, Prelude.Eq)
+                   deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Int.Int32, b ~ Data.Int.Int32,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "total" f PartSetHeader PartSetHeader a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _PartSetHeader'total
-              (\ x__ y__ -> x__{_PartSetHeader'total = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _PartSetHeader'total
+                 (\ x__ y__ -> x__{_PartSetHeader'total = y__}))
+              Prelude.id
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "hash" f PartSetHeader PartSetHeader a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _PartSetHeader'hash
-              (\ x__ y__ -> x__{_PartSetHeader'hash = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _PartSetHeader'hash
+                 (\ x__ y__ -> x__{_PartSetHeader'hash = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default PartSetHeader where
         def
@@ -556,6 +612,7 @@ instance Data.ProtoLens.Message PartSetHeader where
                       :: Data.ProtoLens.FieldDescriptor PartSetHeader
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.PartSetHeader")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, total__field_descriptor),
                     (Data.ProtoLens.Tag 2, hash__field_descriptor)])
@@ -563,204 +620,383 @@ instance Data.ProtoLens.Message PartSetHeader where
                    [("total", total__field_descriptor),
                     ("hash", hash__field_descriptor)])
 
-data Request = Request{_Request'echo ::
-                       !(Prelude.Maybe RequestEcho),
-                       _Request'flush :: !(Prelude.Maybe RequestFlush),
-                       _Request'info :: !(Prelude.Maybe RequestInfo),
-                       _Request'setOption :: !(Prelude.Maybe RequestSetOption),
-                       _Request'initChain :: !(Prelude.Maybe RequestInitChain),
-                       _Request'query :: !(Prelude.Maybe RequestQuery),
-                       _Request'beginBlock :: !(Prelude.Maybe RequestBeginBlock),
-                       _Request'checkTx :: !(Prelude.Maybe RequestCheckTx),
-                       _Request'deliverTx :: !(Prelude.Maybe RequestDeliverTx),
-                       _Request'endBlock :: !(Prelude.Maybe RequestEndBlock),
-                       _Request'commit :: !(Prelude.Maybe RequestCommit)}
-             deriving (Prelude.Show, Prelude.Eq)
+data Request = Request{_Request'value ::
+                       !(Prelude.Maybe Request'Value)}
+             deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
-instance (a ~ RequestEcho, b ~ RequestEcho, Prelude.Functor f) =>
-         Lens.Labels.HasLens "echo" f Request Request a b
+data Request'Value = Request'Echo !RequestEcho
+                   | Request'Flush !RequestFlush
+                   | Request'Info !RequestInfo
+                   | Request'SetOption !RequestSetOption
+                   | Request'InitChain !RequestInitChain
+                   | Request'Query !RequestQuery
+                   | Request'BeginBlock !RequestBeginBlock
+                   | Request'CheckTx !RequestCheckTx
+                   | Request'DeliverTx !RequestDeliverTx
+                   | Request'EndBlock !RequestEndBlock
+                   | Request'Commit !RequestCommit
+                   deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
+
+instance (a ~ Prelude.Maybe Request'Value,
+          b ~ Prelude.Maybe Request'Value, Prelude.Functor f) =>
+         Lens.Labels.HasLens "maybe'value" f Request Request a b
          where
         lensOf _
-          = (Prelude..) maybe'echo
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              Prelude.id
 
 instance (a ~ Prelude.Maybe RequestEcho,
           b ~ Prelude.Maybe RequestEcho, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'echo" f Request Request a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Request'echo
-              (\ x__ y__ -> x__{_Request'echo = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Request'Echo x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Request'Echo y__))
 
-instance (a ~ RequestFlush, b ~ RequestFlush, Prelude.Functor f) =>
-         Lens.Labels.HasLens "flush" f Request Request a b
+instance (a ~ RequestEcho, b ~ RequestEcho, Prelude.Functor f) =>
+         Lens.Labels.HasLens "echo" f Request Request a b
          where
         lensOf _
-          = (Prelude..) maybe'flush
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Request'Echo x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Request'Echo y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe RequestFlush,
           b ~ Prelude.Maybe RequestFlush, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'flush" f Request Request a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Request'flush
-              (\ x__ y__ -> x__{_Request'flush = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Request'Flush x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Request'Flush y__))
 
-instance (a ~ RequestInfo, b ~ RequestInfo, Prelude.Functor f) =>
-         Lens.Labels.HasLens "info" f Request Request a b
+instance (a ~ RequestFlush, b ~ RequestFlush, Prelude.Functor f) =>
+         Lens.Labels.HasLens "flush" f Request Request a b
          where
         lensOf _
-          = (Prelude..) maybe'info
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Request'Flush x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Request'Flush y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe RequestInfo,
           b ~ Prelude.Maybe RequestInfo, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'info" f Request Request a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Request'info
-              (\ x__ y__ -> x__{_Request'info = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Request'Info x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Request'Info y__))
 
-instance (a ~ RequestSetOption, b ~ RequestSetOption,
-          Prelude.Functor f) =>
-         Lens.Labels.HasLens "setOption" f Request Request a b
+instance (a ~ RequestInfo, b ~ RequestInfo, Prelude.Functor f) =>
+         Lens.Labels.HasLens "info" f Request Request a b
          where
         lensOf _
-          = (Prelude..) maybe'setOption
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Request'Info x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Request'Info y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe RequestSetOption,
           b ~ Prelude.Maybe RequestSetOption, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'setOption" f Request Request a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Request'setOption
-              (\ x__ y__ -> x__{_Request'setOption = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Request'SetOption x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Request'SetOption y__))
 
-instance (a ~ RequestInitChain, b ~ RequestInitChain,
+instance (a ~ RequestSetOption, b ~ RequestSetOption,
           Prelude.Functor f) =>
-         Lens.Labels.HasLens "initChain" f Request Request a b
+         Lens.Labels.HasLens "setOption" f Request Request a b
          where
         lensOf _
-          = (Prelude..) maybe'initChain
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Request'SetOption x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Request'SetOption y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe RequestInitChain,
           b ~ Prelude.Maybe RequestInitChain, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'initChain" f Request Request a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Request'initChain
-              (\ x__ y__ -> x__{_Request'initChain = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Request'InitChain x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Request'InitChain y__))
 
-instance (a ~ RequestQuery, b ~ RequestQuery, Prelude.Functor f) =>
-         Lens.Labels.HasLens "query" f Request Request a b
+instance (a ~ RequestInitChain, b ~ RequestInitChain,
+          Prelude.Functor f) =>
+         Lens.Labels.HasLens "initChain" f Request Request a b
          where
         lensOf _
-          = (Prelude..) maybe'query
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Request'InitChain x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Request'InitChain y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe RequestQuery,
           b ~ Prelude.Maybe RequestQuery, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'query" f Request Request a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Request'query
-              (\ x__ y__ -> x__{_Request'query = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Request'Query x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Request'Query y__))
 
-instance (a ~ RequestBeginBlock, b ~ RequestBeginBlock,
-          Prelude.Functor f) =>
-         Lens.Labels.HasLens "beginBlock" f Request Request a b
+instance (a ~ RequestQuery, b ~ RequestQuery, Prelude.Functor f) =>
+         Lens.Labels.HasLens "query" f Request Request a b
          where
         lensOf _
-          = (Prelude..) maybe'beginBlock
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Request'Query x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Request'Query y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe RequestBeginBlock,
           b ~ Prelude.Maybe RequestBeginBlock, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'beginBlock" f Request Request a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Request'beginBlock
-              (\ x__ y__ -> x__{_Request'beginBlock = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Request'BeginBlock x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Request'BeginBlock y__))
 
-instance (a ~ RequestCheckTx, b ~ RequestCheckTx,
+instance (a ~ RequestBeginBlock, b ~ RequestBeginBlock,
           Prelude.Functor f) =>
-         Lens.Labels.HasLens "checkTx" f Request Request a b
+         Lens.Labels.HasLens "beginBlock" f Request Request a b
          where
         lensOf _
-          = (Prelude..) maybe'checkTx
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Request'BeginBlock x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Request'BeginBlock y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe RequestCheckTx,
           b ~ Prelude.Maybe RequestCheckTx, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'checkTx" f Request Request a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Request'checkTx
-              (\ x__ y__ -> x__{_Request'checkTx = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Request'CheckTx x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Request'CheckTx y__))
 
-instance (a ~ RequestDeliverTx, b ~ RequestDeliverTx,
+instance (a ~ RequestCheckTx, b ~ RequestCheckTx,
           Prelude.Functor f) =>
-         Lens.Labels.HasLens "deliverTx" f Request Request a b
+         Lens.Labels.HasLens "checkTx" f Request Request a b
          where
         lensOf _
-          = (Prelude..) maybe'deliverTx
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Request'CheckTx x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Request'CheckTx y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe RequestDeliverTx,
           b ~ Prelude.Maybe RequestDeliverTx, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'deliverTx" f Request Request a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Request'deliverTx
-              (\ x__ y__ -> x__{_Request'deliverTx = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Request'DeliverTx x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Request'DeliverTx y__))
 
-instance (a ~ RequestEndBlock, b ~ RequestEndBlock,
+instance (a ~ RequestDeliverTx, b ~ RequestDeliverTx,
           Prelude.Functor f) =>
-         Lens.Labels.HasLens "endBlock" f Request Request a b
+         Lens.Labels.HasLens "deliverTx" f Request Request a b
          where
         lensOf _
-          = (Prelude..) maybe'endBlock
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Request'DeliverTx x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Request'DeliverTx y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe RequestEndBlock,
           b ~ Prelude.Maybe RequestEndBlock, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'endBlock" f Request Request a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Request'endBlock
-              (\ x__ y__ -> x__{_Request'endBlock = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Request'EndBlock x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Request'EndBlock y__))
 
-instance (a ~ RequestCommit, b ~ RequestCommit,
+instance (a ~ RequestEndBlock, b ~ RequestEndBlock,
           Prelude.Functor f) =>
-         Lens.Labels.HasLens "commit" f Request Request a b
+         Lens.Labels.HasLens "endBlock" f Request Request a b
          where
         lensOf _
-          = (Prelude..) maybe'commit
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Request'EndBlock x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Request'EndBlock y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe RequestCommit,
           b ~ Prelude.Maybe RequestCommit, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'commit" f Request Request a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Request'commit
-              (\ x__ y__ -> x__{_Request'commit = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Request'Commit x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Request'Commit y__))
+
+instance (a ~ RequestCommit, b ~ RequestCommit,
+          Prelude.Functor f) =>
+         Lens.Labels.HasLens "commit" f Request Request a b
+         where
+        lensOf _
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Request'value
+                 (\ x__ y__ -> x__{_Request'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Request'Commit x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Request'Commit y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance Data.Default.Class.Default Request where
-        def
-          = Request{_Request'echo = Prelude.Nothing,
-                    _Request'flush = Prelude.Nothing, _Request'info = Prelude.Nothing,
-                    _Request'setOption = Prelude.Nothing,
-                    _Request'initChain = Prelude.Nothing,
-                    _Request'query = Prelude.Nothing,
-                    _Request'beginBlock = Prelude.Nothing,
-                    _Request'checkTx = Prelude.Nothing,
-                    _Request'deliverTx = Prelude.Nothing,
-                    _Request'endBlock = Prelude.Nothing,
-                    _Request'commit = Prelude.Nothing}
+        def = Request{_Request'value = Prelude.Nothing}
 
 instance Data.ProtoLens.Message Request where
         descriptor
@@ -831,7 +1067,7 @@ instance Data.ProtoLens.Message Request where
                       (Data.ProtoLens.OptionalField maybe'commit)
                       :: Data.ProtoLens.FieldDescriptor Request
               in
-              Data.ProtoLens.MessageDescriptor
+              Data.ProtoLens.MessageDescriptor (Data.Text.pack "types.Request")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 2, echo__field_descriptor),
                     (Data.ProtoLens.Tag 3, flush__field_descriptor),
@@ -862,7 +1098,7 @@ data RequestBeginBlock = RequestBeginBlock{_RequestBeginBlock'hash
                                            _RequestBeginBlock'header :: !(Prelude.Maybe Header),
                                            _RequestBeginBlock'absentValidators :: ![Data.Int.Int32],
                                            _RequestBeginBlock'byzantineValidators :: ![Evidence]}
-                       deriving (Prelude.Show, Prelude.Eq)
+                       deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
@@ -870,8 +1106,10 @@ instance (a ~ Data.ByteString.ByteString,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestBeginBlock'hash
-              (\ x__ y__ -> x__{_RequestBeginBlock'hash = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestBeginBlock'hash
+                 (\ x__ y__ -> x__{_RequestBeginBlock'hash = y__}))
+              Prelude.id
 
 instance (a ~ Header, b ~ Header, Prelude.Functor f) =>
          Lens.Labels.HasLens "header" f RequestBeginBlock RequestBeginBlock
@@ -879,7 +1117,9 @@ instance (a ~ Header, b ~ Header, Prelude.Functor f) =>
            b
          where
         lensOf _
-          = (Prelude..) maybe'header
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestBeginBlock'header
+                 (\ x__ y__ -> x__{_RequestBeginBlock'header = y__}))
               (Data.ProtoLens.maybeLens Data.Default.Class.def)
 
 instance (a ~ Prelude.Maybe Header, b ~ Prelude.Maybe Header,
@@ -890,8 +1130,10 @@ instance (a ~ Prelude.Maybe Header, b ~ Prelude.Maybe Header,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestBeginBlock'header
-              (\ x__ y__ -> x__{_RequestBeginBlock'header = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestBeginBlock'header
+                 (\ x__ y__ -> x__{_RequestBeginBlock'header = y__}))
+              Prelude.id
 
 instance (a ~ [Data.Int.Int32], b ~ [Data.Int.Int32],
           Prelude.Functor f) =>
@@ -901,8 +1143,10 @@ instance (a ~ [Data.Int.Int32], b ~ [Data.Int.Int32],
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestBeginBlock'absentValidators
-              (\ x__ y__ -> x__{_RequestBeginBlock'absentValidators = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestBeginBlock'absentValidators
+                 (\ x__ y__ -> x__{_RequestBeginBlock'absentValidators = y__}))
+              Prelude.id
 
 instance (a ~ [Evidence], b ~ [Evidence], Prelude.Functor f) =>
          Lens.Labels.HasLens "byzantineValidators" f RequestBeginBlock
@@ -911,9 +1155,10 @@ instance (a ~ [Evidence], b ~ [Evidence], Prelude.Functor f) =>
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens
-              _RequestBeginBlock'byzantineValidators
-              (\ x__ y__ -> x__{_RequestBeginBlock'byzantineValidators = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestBeginBlock'byzantineValidators
+                 (\ x__ y__ -> x__{_RequestBeginBlock'byzantineValidators = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default RequestBeginBlock where
         def
@@ -953,6 +1198,7 @@ instance Data.ProtoLens.Message RequestBeginBlock where
                       :: Data.ProtoLens.FieldDescriptor RequestBeginBlock
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.RequestBeginBlock")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, hash__field_descriptor),
                     (Data.ProtoLens.Tag 2, header__field_descriptor),
@@ -966,15 +1212,17 @@ instance Data.ProtoLens.Message RequestBeginBlock where
 
 data RequestCheckTx = RequestCheckTx{_RequestCheckTx'tx ::
                                      !Data.ByteString.ByteString}
-                    deriving (Prelude.Show, Prelude.Eq)
+                    deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "tx" f RequestCheckTx RequestCheckTx a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestCheckTx'tx
-              (\ x__ y__ -> x__{_RequestCheckTx'tx = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestCheckTx'tx
+                 (\ x__ y__ -> x__{_RequestCheckTx'tx = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default RequestCheckTx where
         def
@@ -990,11 +1238,12 @@ instance Data.ProtoLens.Message RequestCheckTx where
                       :: Data.ProtoLens.FieldDescriptor RequestCheckTx
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.RequestCheckTx")
                 (Data.Map.fromList [(Data.ProtoLens.Tag 1, tx__field_descriptor)])
                 (Data.Map.fromList [("tx", tx__field_descriptor)])
 
 data RequestCommit = RequestCommit{}
-                   deriving (Prelude.Show, Prelude.Eq)
+                   deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance Data.Default.Class.Default RequestCommit where
         def = RequestCommit{}
@@ -1002,20 +1251,24 @@ instance Data.Default.Class.Default RequestCommit where
 instance Data.ProtoLens.Message RequestCommit where
         descriptor
           = let in
-              Data.ProtoLens.MessageDescriptor (Data.Map.fromList [])
+              Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.RequestCommit")
+                (Data.Map.fromList [])
                 (Data.Map.fromList [])
 
 data RequestDeliverTx = RequestDeliverTx{_RequestDeliverTx'tx ::
                                          !Data.ByteString.ByteString}
-                      deriving (Prelude.Show, Prelude.Eq)
+                      deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "tx" f RequestDeliverTx RequestDeliverTx a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestDeliverTx'tx
-              (\ x__ y__ -> x__{_RequestDeliverTx'tx = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestDeliverTx'tx
+                 (\ x__ y__ -> x__{_RequestDeliverTx'tx = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default RequestDeliverTx where
         def
@@ -1032,20 +1285,23 @@ instance Data.ProtoLens.Message RequestDeliverTx where
                       :: Data.ProtoLens.FieldDescriptor RequestDeliverTx
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.RequestDeliverTx")
                 (Data.Map.fromList [(Data.ProtoLens.Tag 1, tx__field_descriptor)])
                 (Data.Map.fromList [("tx", tx__field_descriptor)])
 
 data RequestEcho = RequestEcho{_RequestEcho'message ::
                                !Data.Text.Text}
-                 deriving (Prelude.Show, Prelude.Eq)
+                 deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "message" f RequestEcho RequestEcho a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestEcho'message
-              (\ x__ y__ -> x__{_RequestEcho'message = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestEcho'message
+                 (\ x__ y__ -> x__{_RequestEcho'message = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default RequestEcho where
         def
@@ -1061,21 +1317,24 @@ instance Data.ProtoLens.Message RequestEcho where
                       :: Data.ProtoLens.FieldDescriptor RequestEcho
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.RequestEcho")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, message__field_descriptor)])
                 (Data.Map.fromList [("message", message__field_descriptor)])
 
 data RequestEndBlock = RequestEndBlock{_RequestEndBlock'height ::
                                        !Data.Int.Int64}
-                     deriving (Prelude.Show, Prelude.Eq)
+                     deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "height" f RequestEndBlock RequestEndBlock a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestEndBlock'height
-              (\ x__ y__ -> x__{_RequestEndBlock'height = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestEndBlock'height
+                 (\ x__ y__ -> x__{_RequestEndBlock'height = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default RequestEndBlock where
         def
@@ -1092,12 +1351,13 @@ instance Data.ProtoLens.Message RequestEndBlock where
                       :: Data.ProtoLens.FieldDescriptor RequestEndBlock
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.RequestEndBlock")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, height__field_descriptor)])
                 (Data.Map.fromList [("height", height__field_descriptor)])
 
 data RequestFlush = RequestFlush{}
-                  deriving (Prelude.Show, Prelude.Eq)
+                  deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance Data.Default.Class.Default RequestFlush where
         def = RequestFlush{}
@@ -1105,20 +1365,24 @@ instance Data.Default.Class.Default RequestFlush where
 instance Data.ProtoLens.Message RequestFlush where
         descriptor
           = let in
-              Data.ProtoLens.MessageDescriptor (Data.Map.fromList [])
+              Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.RequestFlush")
+                (Data.Map.fromList [])
                 (Data.Map.fromList [])
 
 data RequestInfo = RequestInfo{_RequestInfo'version ::
                                !Data.Text.Text}
-                 deriving (Prelude.Show, Prelude.Eq)
+                 deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "version" f RequestInfo RequestInfo a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestInfo'version
-              (\ x__ y__ -> x__{_RequestInfo'version = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestInfo'version
+                 (\ x__ y__ -> x__{_RequestInfo'version = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default RequestInfo where
         def
@@ -1134,6 +1398,7 @@ instance Data.ProtoLens.Message RequestInfo where
                       :: Data.ProtoLens.FieldDescriptor RequestInfo
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.RequestInfo")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, version__field_descriptor)])
                 (Data.Map.fromList [("version", version__field_descriptor)])
@@ -1142,7 +1407,7 @@ data RequestInitChain = RequestInitChain{_RequestInitChain'validators
                                          :: ![Validator],
                                          _RequestInitChain'appStateBytes ::
                                          !Data.ByteString.ByteString}
-                      deriving (Prelude.Show, Prelude.Eq)
+                      deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ [Validator], b ~ [Validator], Prelude.Functor f) =>
          Lens.Labels.HasLens "validators" f RequestInitChain
@@ -1151,8 +1416,10 @@ instance (a ~ [Validator], b ~ [Validator], Prelude.Functor f) =>
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestInitChain'validators
-              (\ x__ y__ -> x__{_RequestInitChain'validators = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestInitChain'validators
+                 (\ x__ y__ -> x__{_RequestInitChain'validators = y__}))
+              Prelude.id
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
@@ -1162,8 +1429,10 @@ instance (a ~ Data.ByteString.ByteString,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestInitChain'appStateBytes
-              (\ x__ y__ -> x__{_RequestInitChain'appStateBytes = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestInitChain'appStateBytes
+                 (\ x__ y__ -> x__{_RequestInitChain'appStateBytes = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default RequestInitChain where
         def
@@ -1186,6 +1455,7 @@ instance Data.ProtoLens.Message RequestInitChain where
                       :: Data.ProtoLens.FieldDescriptor RequestInitChain
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.RequestInitChain")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, validators__field_descriptor),
                     (Data.ProtoLens.Tag 2, appStateBytes__field_descriptor)])
@@ -1198,38 +1468,46 @@ data RequestQuery = RequestQuery{_RequestQuery'data' ::
                                  _RequestQuery'path :: !Data.Text.Text,
                                  _RequestQuery'height :: !Data.Int.Int64,
                                  _RequestQuery'prove :: !Prelude.Bool}
-                  deriving (Prelude.Show, Prelude.Eq)
+                  deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "data'" f RequestQuery RequestQuery a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestQuery'data'
-              (\ x__ y__ -> x__{_RequestQuery'data' = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestQuery'data'
+                 (\ x__ y__ -> x__{_RequestQuery'data' = y__}))
+              Prelude.id
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "path" f RequestQuery RequestQuery a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestQuery'path
-              (\ x__ y__ -> x__{_RequestQuery'path = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestQuery'path
+                 (\ x__ y__ -> x__{_RequestQuery'path = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "height" f RequestQuery RequestQuery a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestQuery'height
-              (\ x__ y__ -> x__{_RequestQuery'height = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestQuery'height
+                 (\ x__ y__ -> x__{_RequestQuery'height = y__}))
+              Prelude.id
 
 instance (a ~ Prelude.Bool, b ~ Prelude.Bool, Prelude.Functor f) =>
          Lens.Labels.HasLens "prove" f RequestQuery RequestQuery a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestQuery'prove
-              (\ x__ y__ -> x__{_RequestQuery'prove = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestQuery'prove
+                 (\ x__ y__ -> x__{_RequestQuery'prove = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default RequestQuery where
         def
@@ -1266,6 +1544,7 @@ instance Data.ProtoLens.Message RequestQuery where
                       :: Data.ProtoLens.FieldDescriptor RequestQuery
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.RequestQuery")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, data'__field_descriptor),
                     (Data.ProtoLens.Tag 2, path__field_descriptor),
@@ -1280,23 +1559,27 @@ instance Data.ProtoLens.Message RequestQuery where
 data RequestSetOption = RequestSetOption{_RequestSetOption'key ::
                                          !Data.Text.Text,
                                          _RequestSetOption'value :: !Data.Text.Text}
-                      deriving (Prelude.Show, Prelude.Eq)
+                      deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "key" f RequestSetOption RequestSetOption a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestSetOption'key
-              (\ x__ y__ -> x__{_RequestSetOption'key = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestSetOption'key
+                 (\ x__ y__ -> x__{_RequestSetOption'key = y__}))
+              Prelude.id
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "value" f RequestSetOption RequestSetOption a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _RequestSetOption'value
-              (\ x__ y__ -> x__{_RequestSetOption'value = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _RequestSetOption'value
+                 (\ x__ y__ -> x__{_RequestSetOption'value = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default RequestSetOption where
         def
@@ -1320,6 +1603,7 @@ instance Data.ProtoLens.Message RequestSetOption where
                       :: Data.ProtoLens.FieldDescriptor RequestSetOption
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.RequestSetOption")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, key__field_descriptor),
                     (Data.ProtoLens.Tag 2, value__field_descriptor)])
@@ -1327,225 +1611,418 @@ instance Data.ProtoLens.Message RequestSetOption where
                    [("key", key__field_descriptor),
                     ("value", value__field_descriptor)])
 
-data Response = Response{_Response'exception ::
-                         !(Prelude.Maybe ResponseException),
-                         _Response'echo :: !(Prelude.Maybe ResponseEcho),
-                         _Response'flush :: !(Prelude.Maybe ResponseFlush),
-                         _Response'info :: !(Prelude.Maybe ResponseInfo),
-                         _Response'setOption :: !(Prelude.Maybe ResponseSetOption),
-                         _Response'initChain :: !(Prelude.Maybe ResponseInitChain),
-                         _Response'query :: !(Prelude.Maybe ResponseQuery),
-                         _Response'beginBlock :: !(Prelude.Maybe ResponseBeginBlock),
-                         _Response'checkTx :: !(Prelude.Maybe ResponseCheckTx),
-                         _Response'deliverTx :: !(Prelude.Maybe ResponseDeliverTx),
-                         _Response'endBlock :: !(Prelude.Maybe ResponseEndBlock),
-                         _Response'commit :: !(Prelude.Maybe ResponseCommit)}
-              deriving (Prelude.Show, Prelude.Eq)
+data Response = Response{_Response'value ::
+                         !(Prelude.Maybe Response'Value)}
+              deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
-instance (a ~ ResponseException, b ~ ResponseException,
-          Prelude.Functor f) =>
-         Lens.Labels.HasLens "exception" f Response Response a b
+data Response'Value = Response'Exception !ResponseException
+                    | Response'Echo !ResponseEcho
+                    | Response'Flush !ResponseFlush
+                    | Response'Info !ResponseInfo
+                    | Response'SetOption !ResponseSetOption
+                    | Response'InitChain !ResponseInitChain
+                    | Response'Query !ResponseQuery
+                    | Response'BeginBlock !ResponseBeginBlock
+                    | Response'CheckTx !ResponseCheckTx
+                    | Response'DeliverTx !ResponseDeliverTx
+                    | Response'EndBlock !ResponseEndBlock
+                    | Response'Commit !ResponseCommit
+                    deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
+
+instance (a ~ Prelude.Maybe Response'Value,
+          b ~ Prelude.Maybe Response'Value, Prelude.Functor f) =>
+         Lens.Labels.HasLens "maybe'value" f Response Response a b
          where
         lensOf _
-          = (Prelude..) maybe'exception
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              Prelude.id
 
 instance (a ~ Prelude.Maybe ResponseException,
           b ~ Prelude.Maybe ResponseException, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'exception" f Response Response a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Response'exception
-              (\ x__ y__ -> x__{_Response'exception = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Response'Exception x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Response'Exception y__))
 
-instance (a ~ ResponseEcho, b ~ ResponseEcho, Prelude.Functor f) =>
-         Lens.Labels.HasLens "echo" f Response Response a b
+instance (a ~ ResponseException, b ~ ResponseException,
+          Prelude.Functor f) =>
+         Lens.Labels.HasLens "exception" f Response Response a b
          where
         lensOf _
-          = (Prelude..) maybe'echo
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Response'Exception x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Response'Exception y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe ResponseEcho,
           b ~ Prelude.Maybe ResponseEcho, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'echo" f Response Response a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Response'echo
-              (\ x__ y__ -> x__{_Response'echo = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Response'Echo x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Response'Echo y__))
 
-instance (a ~ ResponseFlush, b ~ ResponseFlush,
-          Prelude.Functor f) =>
-         Lens.Labels.HasLens "flush" f Response Response a b
+instance (a ~ ResponseEcho, b ~ ResponseEcho, Prelude.Functor f) =>
+         Lens.Labels.HasLens "echo" f Response Response a b
          where
         lensOf _
-          = (Prelude..) maybe'flush
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Response'Echo x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Response'Echo y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe ResponseFlush,
           b ~ Prelude.Maybe ResponseFlush, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'flush" f Response Response a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Response'flush
-              (\ x__ y__ -> x__{_Response'flush = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Response'Flush x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Response'Flush y__))
 
-instance (a ~ ResponseInfo, b ~ ResponseInfo, Prelude.Functor f) =>
-         Lens.Labels.HasLens "info" f Response Response a b
+instance (a ~ ResponseFlush, b ~ ResponseFlush,
+          Prelude.Functor f) =>
+         Lens.Labels.HasLens "flush" f Response Response a b
          where
         lensOf _
-          = (Prelude..) maybe'info
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Response'Flush x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Response'Flush y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe ResponseInfo,
           b ~ Prelude.Maybe ResponseInfo, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'info" f Response Response a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Response'info
-              (\ x__ y__ -> x__{_Response'info = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Response'Info x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Response'Info y__))
 
-instance (a ~ ResponseSetOption, b ~ ResponseSetOption,
-          Prelude.Functor f) =>
-         Lens.Labels.HasLens "setOption" f Response Response a b
+instance (a ~ ResponseInfo, b ~ ResponseInfo, Prelude.Functor f) =>
+         Lens.Labels.HasLens "info" f Response Response a b
          where
         lensOf _
-          = (Prelude..) maybe'setOption
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Response'Info x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Response'Info y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe ResponseSetOption,
           b ~ Prelude.Maybe ResponseSetOption, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'setOption" f Response Response a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Response'setOption
-              (\ x__ y__ -> x__{_Response'setOption = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Response'SetOption x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Response'SetOption y__))
 
-instance (a ~ ResponseInitChain, b ~ ResponseInitChain,
+instance (a ~ ResponseSetOption, b ~ ResponseSetOption,
           Prelude.Functor f) =>
-         Lens.Labels.HasLens "initChain" f Response Response a b
+         Lens.Labels.HasLens "setOption" f Response Response a b
          where
         lensOf _
-          = (Prelude..) maybe'initChain
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Response'SetOption x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Response'SetOption y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe ResponseInitChain,
           b ~ Prelude.Maybe ResponseInitChain, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'initChain" f Response Response a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Response'initChain
-              (\ x__ y__ -> x__{_Response'initChain = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Response'InitChain x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Response'InitChain y__))
 
-instance (a ~ ResponseQuery, b ~ ResponseQuery,
+instance (a ~ ResponseInitChain, b ~ ResponseInitChain,
           Prelude.Functor f) =>
-         Lens.Labels.HasLens "query" f Response Response a b
+         Lens.Labels.HasLens "initChain" f Response Response a b
          where
         lensOf _
-          = (Prelude..) maybe'query
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Response'InitChain x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Response'InitChain y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe ResponseQuery,
           b ~ Prelude.Maybe ResponseQuery, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'query" f Response Response a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Response'query
-              (\ x__ y__ -> x__{_Response'query = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Response'Query x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Response'Query y__))
 
-instance (a ~ ResponseBeginBlock, b ~ ResponseBeginBlock,
+instance (a ~ ResponseQuery, b ~ ResponseQuery,
           Prelude.Functor f) =>
-         Lens.Labels.HasLens "beginBlock" f Response Response a b
+         Lens.Labels.HasLens "query" f Response Response a b
          where
         lensOf _
-          = (Prelude..) maybe'beginBlock
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Response'Query x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Response'Query y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe ResponseBeginBlock,
           b ~ Prelude.Maybe ResponseBeginBlock, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'beginBlock" f Response Response a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Response'beginBlock
-              (\ x__ y__ -> x__{_Response'beginBlock = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Response'BeginBlock x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Response'BeginBlock y__))
 
-instance (a ~ ResponseCheckTx, b ~ ResponseCheckTx,
+instance (a ~ ResponseBeginBlock, b ~ ResponseBeginBlock,
           Prelude.Functor f) =>
-         Lens.Labels.HasLens "checkTx" f Response Response a b
+         Lens.Labels.HasLens "beginBlock" f Response Response a b
          where
         lensOf _
-          = (Prelude..) maybe'checkTx
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Response'BeginBlock x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Response'BeginBlock y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe ResponseCheckTx,
           b ~ Prelude.Maybe ResponseCheckTx, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'checkTx" f Response Response a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Response'checkTx
-              (\ x__ y__ -> x__{_Response'checkTx = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Response'CheckTx x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Response'CheckTx y__))
 
-instance (a ~ ResponseDeliverTx, b ~ ResponseDeliverTx,
+instance (a ~ ResponseCheckTx, b ~ ResponseCheckTx,
           Prelude.Functor f) =>
-         Lens.Labels.HasLens "deliverTx" f Response Response a b
+         Lens.Labels.HasLens "checkTx" f Response Response a b
          where
         lensOf _
-          = (Prelude..) maybe'deliverTx
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Response'CheckTx x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Response'CheckTx y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe ResponseDeliverTx,
           b ~ Prelude.Maybe ResponseDeliverTx, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'deliverTx" f Response Response a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Response'deliverTx
-              (\ x__ y__ -> x__{_Response'deliverTx = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Response'DeliverTx x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Response'DeliverTx y__))
 
-instance (a ~ ResponseEndBlock, b ~ ResponseEndBlock,
+instance (a ~ ResponseDeliverTx, b ~ ResponseDeliverTx,
           Prelude.Functor f) =>
-         Lens.Labels.HasLens "endBlock" f Response Response a b
+         Lens.Labels.HasLens "deliverTx" f Response Response a b
          where
         lensOf _
-          = (Prelude..) maybe'endBlock
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Response'DeliverTx x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Response'DeliverTx y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe ResponseEndBlock,
           b ~ Prelude.Maybe ResponseEndBlock, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'endBlock" f Response Response a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Response'endBlock
-              (\ x__ y__ -> x__{_Response'endBlock = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Response'EndBlock x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Response'EndBlock y__))
 
-instance (a ~ ResponseCommit, b ~ ResponseCommit,
+instance (a ~ ResponseEndBlock, b ~ ResponseEndBlock,
           Prelude.Functor f) =>
-         Lens.Labels.HasLens "commit" f Response Response a b
+         Lens.Labels.HasLens "endBlock" f Response Response a b
          where
         lensOf _
-          = (Prelude..) maybe'commit
-              (Data.ProtoLens.maybeLens Data.Default.Class.def)
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Response'EndBlock x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Response'EndBlock y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance (a ~ Prelude.Maybe ResponseCommit,
           b ~ Prelude.Maybe ResponseCommit, Prelude.Functor f) =>
          Lens.Labels.HasLens "maybe'commit" f Response Response a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Response'commit
-              (\ x__ y__ -> x__{_Response'commit = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              (Lens.Family2.Unchecked.lens
+                 (\ x__ ->
+                    case x__ of
+                        Prelude.Just (Response'Commit x__val) -> Prelude.Just x__val
+                        _otherwise -> Prelude.Nothing)
+                 (\ _ y__ -> Prelude.fmap Response'Commit y__))
+
+instance (a ~ ResponseCommit, b ~ ResponseCommit,
+          Prelude.Functor f) =>
+         Lens.Labels.HasLens "commit" f Response Response a b
+         where
+        lensOf _
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Response'value
+                 (\ x__ y__ -> x__{_Response'value = y__}))
+              ((Prelude..)
+                 (Lens.Family2.Unchecked.lens
+                    (\ x__ ->
+                       case x__ of
+                           Prelude.Just (Response'Commit x__val) -> Prelude.Just x__val
+                           _otherwise -> Prelude.Nothing)
+                    (\ _ y__ -> Prelude.fmap Response'Commit y__))
+                 (Data.ProtoLens.maybeLens Data.Default.Class.def))
 
 instance Data.Default.Class.Default Response where
-        def
-          = Response{_Response'exception = Prelude.Nothing,
-                     _Response'echo = Prelude.Nothing,
-                     _Response'flush = Prelude.Nothing,
-                     _Response'info = Prelude.Nothing,
-                     _Response'setOption = Prelude.Nothing,
-                     _Response'initChain = Prelude.Nothing,
-                     _Response'query = Prelude.Nothing,
-                     _Response'beginBlock = Prelude.Nothing,
-                     _Response'checkTx = Prelude.Nothing,
-                     _Response'deliverTx = Prelude.Nothing,
-                     _Response'endBlock = Prelude.Nothing,
-                     _Response'commit = Prelude.Nothing}
+        def = Response{_Response'value = Prelude.Nothing}
 
 instance Data.ProtoLens.Message Response where
         descriptor
@@ -1622,7 +2099,7 @@ instance Data.ProtoLens.Message Response where
                       (Data.ProtoLens.OptionalField maybe'commit)
                       :: Data.ProtoLens.FieldDescriptor Response
               in
-              Data.ProtoLens.MessageDescriptor
+              Data.ProtoLens.MessageDescriptor (Data.Text.pack "types.Response")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, exception__field_descriptor),
                     (Data.ProtoLens.Tag 2, echo__field_descriptor),
@@ -1651,7 +2128,7 @@ instance Data.ProtoLens.Message Response where
                     ("commit", commit__field_descriptor)])
 
 data ResponseBeginBlock = ResponseBeginBlock{}
-                        deriving (Prelude.Show, Prelude.Eq)
+                        deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance Data.Default.Class.Default ResponseBeginBlock where
         def = ResponseBeginBlock{}
@@ -1659,7 +2136,9 @@ instance Data.Default.Class.Default ResponseBeginBlock where
 instance Data.ProtoLens.Message ResponseBeginBlock where
         descriptor
           = let in
-              Data.ProtoLens.MessageDescriptor (Data.Map.fromList [])
+              Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.ResponseBeginBlock")
+                (Data.Map.fromList [])
                 (Data.Map.fromList [])
 
 data ResponseCheckTx = ResponseCheckTx{_ResponseCheckTx'code ::
@@ -1674,39 +2153,47 @@ data ResponseCheckTx = ResponseCheckTx{_ResponseCheckTx'code ::
                                        _ResponseCheckTx'fee ::
                                        !(Prelude.Maybe
                                            Proto.Github.Com.Tendermint.Tmlibs.Common.Types.KI64Pair)}
-                     deriving (Prelude.Show, Prelude.Eq)
+                     deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Word.Word32, b ~ Data.Word.Word32,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "code" f ResponseCheckTx ResponseCheckTx a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseCheckTx'code
-              (\ x__ y__ -> x__{_ResponseCheckTx'code = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseCheckTx'code
+                 (\ x__ y__ -> x__{_ResponseCheckTx'code = y__}))
+              Prelude.id
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "data'" f ResponseCheckTx ResponseCheckTx a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseCheckTx'data'
-              (\ x__ y__ -> x__{_ResponseCheckTx'data' = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseCheckTx'data'
+                 (\ x__ y__ -> x__{_ResponseCheckTx'data' = y__}))
+              Prelude.id
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "log" f ResponseCheckTx ResponseCheckTx a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseCheckTx'log
-              (\ x__ y__ -> x__{_ResponseCheckTx'log = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseCheckTx'log
+                 (\ x__ y__ -> x__{_ResponseCheckTx'log = y__}))
+              Prelude.id
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "info" f ResponseCheckTx ResponseCheckTx a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseCheckTx'info
-              (\ x__ y__ -> x__{_ResponseCheckTx'info = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseCheckTx'info
+                 (\ x__ y__ -> x__{_ResponseCheckTx'info = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
@@ -1714,16 +2201,20 @@ instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseCheckTx'gasWanted
-              (\ x__ y__ -> x__{_ResponseCheckTx'gasWanted = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseCheckTx'gasWanted
+                 (\ x__ y__ -> x__{_ResponseCheckTx'gasWanted = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "gasUsed" f ResponseCheckTx ResponseCheckTx a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseCheckTx'gasUsed
-              (\ x__ y__ -> x__{_ResponseCheckTx'gasUsed = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseCheckTx'gasUsed
+                 (\ x__ y__ -> x__{_ResponseCheckTx'gasUsed = y__}))
+              Prelude.id
 
 instance (a ~
             [Proto.Github.Com.Tendermint.Tmlibs.Common.Types.KVPair],
@@ -1732,8 +2223,10 @@ instance (a ~
          Lens.Labels.HasLens "tags" f ResponseCheckTx ResponseCheckTx a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseCheckTx'tags
-              (\ x__ y__ -> x__{_ResponseCheckTx'tags = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseCheckTx'tags
+                 (\ x__ y__ -> x__{_ResponseCheckTx'tags = y__}))
+              Prelude.id
 
 instance (a ~
             Proto.Github.Com.Tendermint.Tmlibs.Common.Types.KI64Pair,
@@ -1742,7 +2235,9 @@ instance (a ~
          Lens.Labels.HasLens "fee" f ResponseCheckTx ResponseCheckTx a b
          where
         lensOf _
-          = (Prelude..) maybe'fee
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseCheckTx'fee
+                 (\ x__ y__ -> x__{_ResponseCheckTx'fee = y__}))
               (Data.ProtoLens.maybeLens Data.Default.Class.def)
 
 instance (a ~
@@ -1756,8 +2251,10 @@ instance (a ~
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseCheckTx'fee
-              (\ x__ y__ -> x__{_ResponseCheckTx'fee = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseCheckTx'fee
+                 (\ x__ y__ -> x__{_ResponseCheckTx'fee = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default ResponseCheckTx where
         def
@@ -1824,6 +2321,7 @@ instance Data.ProtoLens.Message ResponseCheckTx where
                       :: Data.ProtoLens.FieldDescriptor ResponseCheckTx
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.ResponseCheckTx")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, code__field_descriptor),
                     (Data.ProtoLens.Tag 2, data'__field_descriptor),
@@ -1843,15 +2341,17 @@ instance Data.ProtoLens.Message ResponseCheckTx where
 
 data ResponseCommit = ResponseCommit{_ResponseCommit'data' ::
                                      !Data.ByteString.ByteString}
-                    deriving (Prelude.Show, Prelude.Eq)
+                    deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "data'" f ResponseCommit ResponseCommit a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseCommit'data'
-              (\ x__ y__ -> x__{_ResponseCommit'data' = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseCommit'data'
+                 (\ x__ y__ -> x__{_ResponseCommit'data' = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default ResponseCommit where
         def
@@ -1868,6 +2368,7 @@ instance Data.ProtoLens.Message ResponseCommit where
                       :: Data.ProtoLens.FieldDescriptor ResponseCommit
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.ResponseCommit")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 2, data'__field_descriptor)])
                 (Data.Map.fromList [("data", data'__field_descriptor)])
@@ -1884,7 +2385,7 @@ data ResponseDeliverTx = ResponseDeliverTx{_ResponseDeliverTx'code
                                            _ResponseDeliverTx'fee ::
                                            !(Prelude.Maybe
                                                Proto.Github.Com.Tendermint.Tmlibs.Common.Types.KI64Pair)}
-                       deriving (Prelude.Show, Prelude.Eq)
+                       deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Word.Word32, b ~ Data.Word.Word32,
           Prelude.Functor f) =>
@@ -1892,8 +2393,10 @@ instance (a ~ Data.Word.Word32, b ~ Data.Word.Word32,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseDeliverTx'code
-              (\ x__ y__ -> x__{_ResponseDeliverTx'code = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseDeliverTx'code
+                 (\ x__ y__ -> x__{_ResponseDeliverTx'code = y__}))
+              Prelude.id
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
@@ -1901,16 +2404,20 @@ instance (a ~ Data.ByteString.ByteString,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseDeliverTx'data'
-              (\ x__ y__ -> x__{_ResponseDeliverTx'data' = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseDeliverTx'data'
+                 (\ x__ y__ -> x__{_ResponseDeliverTx'data' = y__}))
+              Prelude.id
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "log" f ResponseDeliverTx ResponseDeliverTx a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseDeliverTx'log
-              (\ x__ y__ -> x__{_ResponseDeliverTx'log = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseDeliverTx'log
+                 (\ x__ y__ -> x__{_ResponseDeliverTx'log = y__}))
+              Prelude.id
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
@@ -1918,8 +2425,10 @@ instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseDeliverTx'info
-              (\ x__ y__ -> x__{_ResponseDeliverTx'info = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseDeliverTx'info
+                 (\ x__ y__ -> x__{_ResponseDeliverTx'info = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
@@ -1929,8 +2438,10 @@ instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseDeliverTx'gasWanted
-              (\ x__ y__ -> x__{_ResponseDeliverTx'gasWanted = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseDeliverTx'gasWanted
+                 (\ x__ y__ -> x__{_ResponseDeliverTx'gasWanted = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
@@ -1939,8 +2450,10 @@ instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseDeliverTx'gasUsed
-              (\ x__ y__ -> x__{_ResponseDeliverTx'gasUsed = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseDeliverTx'gasUsed
+                 (\ x__ y__ -> x__{_ResponseDeliverTx'gasUsed = y__}))
+              Prelude.id
 
 instance (a ~
             [Proto.Github.Com.Tendermint.Tmlibs.Common.Types.KVPair],
@@ -1950,8 +2463,10 @@ instance (a ~
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseDeliverTx'tags
-              (\ x__ y__ -> x__{_ResponseDeliverTx'tags = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseDeliverTx'tags
+                 (\ x__ y__ -> x__{_ResponseDeliverTx'tags = y__}))
+              Prelude.id
 
 instance (a ~
             Proto.Github.Com.Tendermint.Tmlibs.Common.Types.KI64Pair,
@@ -1960,7 +2475,9 @@ instance (a ~
          Lens.Labels.HasLens "fee" f ResponseDeliverTx ResponseDeliverTx a b
          where
         lensOf _
-          = (Prelude..) maybe'fee
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseDeliverTx'fee
+                 (\ x__ y__ -> x__{_ResponseDeliverTx'fee = y__}))
               (Data.ProtoLens.maybeLens Data.Default.Class.def)
 
 instance (a ~
@@ -1976,8 +2493,10 @@ instance (a ~
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseDeliverTx'fee
-              (\ x__ y__ -> x__{_ResponseDeliverTx'fee = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseDeliverTx'fee
+                 (\ x__ y__ -> x__{_ResponseDeliverTx'fee = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default ResponseDeliverTx where
         def
@@ -2045,6 +2564,7 @@ instance Data.ProtoLens.Message ResponseDeliverTx where
                       :: Data.ProtoLens.FieldDescriptor ResponseDeliverTx
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.ResponseDeliverTx")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, code__field_descriptor),
                     (Data.ProtoLens.Tag 2, data'__field_descriptor),
@@ -2064,15 +2584,17 @@ instance Data.ProtoLens.Message ResponseDeliverTx where
 
 data ResponseEcho = ResponseEcho{_ResponseEcho'message ::
                                  !Data.Text.Text}
-                  deriving (Prelude.Show, Prelude.Eq)
+                  deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "message" f ResponseEcho ResponseEcho a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseEcho'message
-              (\ x__ y__ -> x__{_ResponseEcho'message = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseEcho'message
+                 (\ x__ y__ -> x__{_ResponseEcho'message = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default ResponseEcho where
         def
@@ -2088,6 +2610,7 @@ instance Data.ProtoLens.Message ResponseEcho where
                       :: Data.ProtoLens.FieldDescriptor ResponseEcho
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.ResponseEcho")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, message__field_descriptor)])
                 (Data.Map.fromList [("message", message__field_descriptor)])
@@ -2096,7 +2619,7 @@ data ResponseEndBlock = ResponseEndBlock{_ResponseEndBlock'validatorUpdates
                                          :: ![Validator],
                                          _ResponseEndBlock'consensusParamUpdates ::
                                          !(Prelude.Maybe ConsensusParams)}
-                      deriving (Prelude.Show, Prelude.Eq)
+                      deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ [Validator], b ~ [Validator], Prelude.Functor f) =>
          Lens.Labels.HasLens "validatorUpdates" f ResponseEndBlock
@@ -2105,8 +2628,10 @@ instance (a ~ [Validator], b ~ [Validator], Prelude.Functor f) =>
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseEndBlock'validatorUpdates
-              (\ x__ y__ -> x__{_ResponseEndBlock'validatorUpdates = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseEndBlock'validatorUpdates
+                 (\ x__ y__ -> x__{_ResponseEndBlock'validatorUpdates = y__}))
+              Prelude.id
 
 instance (a ~ ConsensusParams, b ~ ConsensusParams,
           Prelude.Functor f) =>
@@ -2116,7 +2641,10 @@ instance (a ~ ConsensusParams, b ~ ConsensusParams,
            b
          where
         lensOf _
-          = (Prelude..) maybe'consensusParamUpdates
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens
+                 _ResponseEndBlock'consensusParamUpdates
+                 (\ x__ y__ -> x__{_ResponseEndBlock'consensusParamUpdates = y__}))
               (Data.ProtoLens.maybeLens Data.Default.Class.def)
 
 instance (a ~ Prelude.Maybe ConsensusParams,
@@ -2128,9 +2656,11 @@ instance (a ~ Prelude.Maybe ConsensusParams,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens
-              _ResponseEndBlock'consensusParamUpdates
-              (\ x__ y__ -> x__{_ResponseEndBlock'consensusParamUpdates = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens
+                 _ResponseEndBlock'consensusParamUpdates
+                 (\ x__ y__ -> x__{_ResponseEndBlock'consensusParamUpdates = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default ResponseEndBlock where
         def
@@ -2154,6 +2684,7 @@ instance Data.ProtoLens.Message ResponseEndBlock where
                       :: Data.ProtoLens.FieldDescriptor ResponseEndBlock
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.ResponseEndBlock")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, validatorUpdates__field_descriptor),
                     (Data.ProtoLens.Tag 2, consensusParamUpdates__field_descriptor)])
@@ -2164,7 +2695,7 @@ instance Data.ProtoLens.Message ResponseEndBlock where
 
 data ResponseException = ResponseException{_ResponseException'error
                                            :: !Data.Text.Text}
-                       deriving (Prelude.Show, Prelude.Eq)
+                       deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
@@ -2172,8 +2703,10 @@ instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseException'error
-              (\ x__ y__ -> x__{_ResponseException'error = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseException'error
+                 (\ x__ y__ -> x__{_ResponseException'error = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default ResponseException where
         def
@@ -2190,12 +2723,13 @@ instance Data.ProtoLens.Message ResponseException where
                       :: Data.ProtoLens.FieldDescriptor ResponseException
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.ResponseException")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, error__field_descriptor)])
                 (Data.Map.fromList [("error", error__field_descriptor)])
 
 data ResponseFlush = ResponseFlush{}
-                   deriving (Prelude.Show, Prelude.Eq)
+                   deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance Data.Default.Class.Default ResponseFlush where
         def = ResponseFlush{}
@@ -2203,7 +2737,9 @@ instance Data.Default.Class.Default ResponseFlush where
 instance Data.ProtoLens.Message ResponseFlush where
         descriptor
           = let in
-              Data.ProtoLens.MessageDescriptor (Data.Map.fromList [])
+              Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.ResponseFlush")
+                (Data.Map.fromList [])
                 (Data.Map.fromList [])
 
 data ResponseInfo = ResponseInfo{_ResponseInfo'data' ::
@@ -2211,23 +2747,27 @@ data ResponseInfo = ResponseInfo{_ResponseInfo'data' ::
                                  _ResponseInfo'version :: !Data.Text.Text,
                                  _ResponseInfo'lastBlockHeight :: !Data.Int.Int64,
                                  _ResponseInfo'lastBlockAppHash :: !Data.ByteString.ByteString}
-                  deriving (Prelude.Show, Prelude.Eq)
+                  deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "data'" f ResponseInfo ResponseInfo a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseInfo'data'
-              (\ x__ y__ -> x__{_ResponseInfo'data' = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseInfo'data'
+                 (\ x__ y__ -> x__{_ResponseInfo'data' = y__}))
+              Prelude.id
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "version" f ResponseInfo ResponseInfo a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseInfo'version
-              (\ x__ y__ -> x__{_ResponseInfo'version = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseInfo'version
+                 (\ x__ y__ -> x__{_ResponseInfo'version = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
@@ -2235,8 +2775,10 @@ instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseInfo'lastBlockHeight
-              (\ x__ y__ -> x__{_ResponseInfo'lastBlockHeight = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseInfo'lastBlockHeight
+                 (\ x__ y__ -> x__{_ResponseInfo'lastBlockHeight = y__}))
+              Prelude.id
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
@@ -2245,8 +2787,10 @@ instance (a ~ Data.ByteString.ByteString,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseInfo'lastBlockAppHash
-              (\ x__ y__ -> x__{_ResponseInfo'lastBlockAppHash = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseInfo'lastBlockAppHash
+                 (\ x__ y__ -> x__{_ResponseInfo'lastBlockAppHash = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default ResponseInfo where
         def
@@ -2284,6 +2828,7 @@ instance Data.ProtoLens.Message ResponseInfo where
                       :: Data.ProtoLens.FieldDescriptor ResponseInfo
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.ResponseInfo")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, data'__field_descriptor),
                     (Data.ProtoLens.Tag 2, version__field_descriptor),
@@ -2296,7 +2841,7 @@ instance Data.ProtoLens.Message ResponseInfo where
                     ("last_block_app_hash", lastBlockAppHash__field_descriptor)])
 
 data ResponseInitChain = ResponseInitChain{}
-                       deriving (Prelude.Show, Prelude.Eq)
+                       deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance Data.Default.Class.Default ResponseInitChain where
         def = ResponseInitChain{}
@@ -2304,7 +2849,9 @@ instance Data.Default.Class.Default ResponseInitChain where
 instance Data.ProtoLens.Message ResponseInitChain where
         descriptor
           = let in
-              Data.ProtoLens.MessageDescriptor (Data.Map.fromList [])
+              Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.ResponseInitChain")
+                (Data.Map.fromList [])
                 (Data.Map.fromList [])
 
 data ResponseQuery = ResponseQuery{_ResponseQuery'code ::
@@ -2316,71 +2863,87 @@ data ResponseQuery = ResponseQuery{_ResponseQuery'code ::
                                    _ResponseQuery'value :: !Data.ByteString.ByteString,
                                    _ResponseQuery'proof :: !Data.ByteString.ByteString,
                                    _ResponseQuery'height :: !Data.Int.Int64}
-                   deriving (Prelude.Show, Prelude.Eq)
+                   deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Word.Word32, b ~ Data.Word.Word32,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "code" f ResponseQuery ResponseQuery a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseQuery'code
-              (\ x__ y__ -> x__{_ResponseQuery'code = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseQuery'code
+                 (\ x__ y__ -> x__{_ResponseQuery'code = y__}))
+              Prelude.id
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "log" f ResponseQuery ResponseQuery a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseQuery'log
-              (\ x__ y__ -> x__{_ResponseQuery'log = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseQuery'log
+                 (\ x__ y__ -> x__{_ResponseQuery'log = y__}))
+              Prelude.id
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "info" f ResponseQuery ResponseQuery a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseQuery'info
-              (\ x__ y__ -> x__{_ResponseQuery'info = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseQuery'info
+                 (\ x__ y__ -> x__{_ResponseQuery'info = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "index" f ResponseQuery ResponseQuery a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseQuery'index
-              (\ x__ y__ -> x__{_ResponseQuery'index = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseQuery'index
+                 (\ x__ y__ -> x__{_ResponseQuery'index = y__}))
+              Prelude.id
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "key" f ResponseQuery ResponseQuery a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseQuery'key
-              (\ x__ y__ -> x__{_ResponseQuery'key = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseQuery'key
+                 (\ x__ y__ -> x__{_ResponseQuery'key = y__}))
+              Prelude.id
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "value" f ResponseQuery ResponseQuery a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseQuery'value
-              (\ x__ y__ -> x__{_ResponseQuery'value = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseQuery'value
+                 (\ x__ y__ -> x__{_ResponseQuery'value = y__}))
+              Prelude.id
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "proof" f ResponseQuery ResponseQuery a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseQuery'proof
-              (\ x__ y__ -> x__{_ResponseQuery'proof = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseQuery'proof
+                 (\ x__ y__ -> x__{_ResponseQuery'proof = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "height" f ResponseQuery ResponseQuery a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseQuery'height
-              (\ x__ y__ -> x__{_ResponseQuery'height = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseQuery'height
+                 (\ x__ y__ -> x__{_ResponseQuery'height = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default ResponseQuery where
         def
@@ -2445,6 +3008,7 @@ instance Data.ProtoLens.Message ResponseQuery where
                       :: Data.ProtoLens.FieldDescriptor ResponseQuery
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.ResponseQuery")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, code__field_descriptor),
                     (Data.ProtoLens.Tag 3, log__field_descriptor),
@@ -2466,7 +3030,7 @@ data ResponseSetOption = ResponseSetOption{_ResponseSetOption'code
                                            :: !Data.Word.Word32,
                                            _ResponseSetOption'log :: !Data.Text.Text,
                                            _ResponseSetOption'info :: !Data.Text.Text}
-                       deriving (Prelude.Show, Prelude.Eq)
+                       deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Word.Word32, b ~ Data.Word.Word32,
           Prelude.Functor f) =>
@@ -2474,16 +3038,20 @@ instance (a ~ Data.Word.Word32, b ~ Data.Word.Word32,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseSetOption'code
-              (\ x__ y__ -> x__{_ResponseSetOption'code = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseSetOption'code
+                 (\ x__ y__ -> x__{_ResponseSetOption'code = y__}))
+              Prelude.id
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "log" f ResponseSetOption ResponseSetOption a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseSetOption'log
-              (\ x__ y__ -> x__{_ResponseSetOption'log = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseSetOption'log
+                 (\ x__ y__ -> x__{_ResponseSetOption'log = y__}))
+              Prelude.id
 
 instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
           Prelude.Functor f) =>
@@ -2491,8 +3059,10 @@ instance (a ~ Data.Text.Text, b ~ Data.Text.Text,
            b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _ResponseSetOption'info
-              (\ x__ y__ -> x__{_ResponseSetOption'info = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _ResponseSetOption'info
+                 (\ x__ y__ -> x__{_ResponseSetOption'info = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default ResponseSetOption where
         def
@@ -2523,6 +3093,7 @@ instance Data.ProtoLens.Message ResponseSetOption where
                       :: Data.ProtoLens.FieldDescriptor ResponseSetOption
               in
               Data.ProtoLens.MessageDescriptor
+                (Data.Text.pack "types.ResponseSetOption")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, code__field_descriptor),
                     (Data.ProtoLens.Tag 3, log__field_descriptor),
@@ -2533,23 +3104,27 @@ instance Data.ProtoLens.Message ResponseSetOption where
 
 data TxSize = TxSize{_TxSize'maxBytes :: !Data.Int.Int32,
                      _TxSize'maxGas :: !Data.Int.Int64}
-            deriving (Prelude.Show, Prelude.Eq)
+            deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Int.Int32, b ~ Data.Int.Int32,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "maxBytes" f TxSize TxSize a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _TxSize'maxBytes
-              (\ x__ y__ -> x__{_TxSize'maxBytes = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _TxSize'maxBytes
+                 (\ x__ y__ -> x__{_TxSize'maxBytes = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "maxGas" f TxSize TxSize a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _TxSize'maxGas
-              (\ x__ y__ -> x__{_TxSize'maxGas = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _TxSize'maxGas
+                 (\ x__ y__ -> x__{_TxSize'maxGas = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default TxSize where
         def
@@ -2571,7 +3146,7 @@ instance Data.ProtoLens.Message TxSize where
                       (Data.ProtoLens.PlainField Data.ProtoLens.Optional maxGas)
                       :: Data.ProtoLens.FieldDescriptor TxSize
               in
-              Data.ProtoLens.MessageDescriptor
+              Data.ProtoLens.MessageDescriptor (Data.Text.pack "types.TxSize")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, maxBytes__field_descriptor),
                     (Data.ProtoLens.Tag 2, maxGas__field_descriptor)])
@@ -2582,23 +3157,27 @@ instance Data.ProtoLens.Message TxSize where
 data Validator = Validator{_Validator'pubKey ::
                            !Data.ByteString.ByteString,
                            _Validator'power :: !Data.Int.Int64}
-               deriving (Prelude.Show, Prelude.Eq)
+               deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.ByteString.ByteString,
           b ~ Data.ByteString.ByteString, Prelude.Functor f) =>
          Lens.Labels.HasLens "pubKey" f Validator Validator a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Validator'pubKey
-              (\ x__ y__ -> x__{_Validator'pubKey = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Validator'pubKey
+                 (\ x__ y__ -> x__{_Validator'pubKey = y__}))
+              Prelude.id
 
 instance (a ~ Data.Int.Int64, b ~ Data.Int.Int64,
           Prelude.Functor f) =>
          Lens.Labels.HasLens "power" f Validator Validator a b
          where
         lensOf _
-          = Lens.Family2.Unchecked.lens _Validator'power
-              (\ x__ y__ -> x__{_Validator'power = y__})
+          = (Prelude..)
+              (Lens.Family2.Unchecked.lens _Validator'power
+                 (\ x__ y__ -> x__{_Validator'power = y__}))
+              Prelude.id
 
 instance Data.Default.Class.Default Validator where
         def
@@ -2620,7 +3199,7 @@ instance Data.ProtoLens.Message Validator where
                       (Data.ProtoLens.PlainField Data.ProtoLens.Optional power)
                       :: Data.ProtoLens.FieldDescriptor Validator
               in
-              Data.ProtoLens.MessageDescriptor
+              Data.ProtoLens.MessageDescriptor (Data.Text.pack "types.Validator")
                 (Data.Map.fromList
                    [(Data.ProtoLens.Tag 1, pubKey__field_descriptor),
                     (Data.ProtoLens.Tag 2, power__field_descriptor)])
@@ -3065,6 +3644,13 @@ maybe'txSize ::
 maybe'txSize
   = Lens.Labels.lensOf
       ((Lens.Labels.proxy#) :: (Lens.Labels.Proxy#) "maybe'txSize")
+
+maybe'value ::
+            forall f s t a b . (Lens.Labels.HasLens "maybe'value" f s t a b) =>
+              Lens.Family2.LensLike f s t a b
+maybe'value
+  = Lens.Labels.lensOf
+      ((Lens.Labels.proxy#) :: (Lens.Labels.Proxy#) "maybe'value")
 
 message ::
         forall f s t a b . (Lens.Labels.HasLens "message" f s t a b) =>
