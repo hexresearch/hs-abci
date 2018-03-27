@@ -1611,8 +1611,7 @@ instance Data.ProtoLens.Message RequestSetOption where
                    [("key", key__field_descriptor),
                     ("value", value__field_descriptor)])
 
-data Response = Response{_Response'value ::
-                         !(Prelude.Maybe Response'Value)}
+data Response = Response{_Response'value :: !(Prelude.Maybe Response'Value)}
               deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 data Response'Value = Response'Exception !ResponseException
@@ -2141,18 +2140,14 @@ instance Data.ProtoLens.Message ResponseBeginBlock where
                 (Data.Map.fromList [])
                 (Data.Map.fromList [])
 
-data ResponseCheckTx = ResponseCheckTx{_ResponseCheckTx'code ::
-                                       !Data.Word.Word32,
+data ResponseCheckTx = ResponseCheckTx{_ResponseCheckTx'code :: !Data.Word.Word32,
                                        _ResponseCheckTx'data' :: !Data.ByteString.ByteString,
                                        _ResponseCheckTx'log :: !Data.Text.Text,
                                        _ResponseCheckTx'info :: !Data.Text.Text,
                                        _ResponseCheckTx'gasWanted :: !Data.Int.Int64,
                                        _ResponseCheckTx'gasUsed :: !Data.Int.Int64,
-                                       _ResponseCheckTx'tags ::
-                                       ![Proto.Github.Com.Tendermint.Tmlibs.Common.Types.KVPair],
-                                       _ResponseCheckTx'fee ::
-                                       !(Prelude.Maybe
-                                           Proto.Github.Com.Tendermint.Tmlibs.Common.Types.KI64Pair)}
+                                       _ResponseCheckTx'tags :: ![Proto.Github.Com.Tendermint.Tmlibs.Common.Types.KVPair],
+                                       _ResponseCheckTx'fee :: !(Prelude.Maybe Proto.Github.Com.Tendermint.Tmlibs.Common.Types.KI64Pair)}
                      deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.Word.Word32, b ~ Data.Word.Word32,
@@ -2339,8 +2334,7 @@ instance Data.ProtoLens.Message ResponseCheckTx where
                     ("gas_used", gasUsed__field_descriptor),
                     ("tags", tags__field_descriptor), ("fee", fee__field_descriptor)])
 
-data ResponseCommit = ResponseCommit{_ResponseCommit'data' ::
-                                     !Data.ByteString.ByteString}
+data ResponseCommit = ResponseCommit{_ResponseCommit'data' :: !Data.ByteString.ByteString}
                     deriving (Prelude.Show, Prelude.Eq, Prelude.Ord)
 
 instance (a ~ Data.ByteString.ByteString,
@@ -2854,8 +2848,7 @@ instance Data.ProtoLens.Message ResponseInitChain where
                 (Data.Map.fromList [])
                 (Data.Map.fromList [])
 
-data ResponseQuery = ResponseQuery{_ResponseQuery'code ::
-                                   !Data.Word.Word32,
+data ResponseQuery = ResponseQuery{_ResponseQuery'code :: !Data.Word.Word32,
                                    _ResponseQuery'log :: !Data.Text.Text,
                                    _ResponseQuery'info :: !Data.Text.Text,
                                    _ResponseQuery'index :: !Data.Int.Int64,

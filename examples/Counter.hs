@@ -67,17 +67,17 @@ main = do
 
       RequestDeliverTx txData -> do
         (code, log') <- processTransaction stateVar txData incTxCount
-        return (ResponseDeliverTx code "" log' [])
+        return (ResponseDeliverTx code "" log' "" 0 0 [] Nothing)
 
       RequestCheckTx txData -> do
         (code, log') <- processTransaction stateVar txData (return ())
-        return (ResponseCheckTx code "" log' 0 0)
+        return (ResponseCheckTx code "" log' "" 0 0 [] Nothing)
 
       RequestCommit -> do
         STM.atomically incHashCount
         CounterState{csTxCount} <- STM.readTVarIO stateVar
         let data' = if csTxCount == 0 then "" else serializeBe csTxCount
-        return (ResponseCommit codeTypeOK data' "")
+        return (ResponseCommit data')
 
       RequestQuery{requestQuery'path=path} -> do
         state <- STM.readTVarIO stateVar
@@ -89,7 +89,7 @@ main = do
           p  -> retErr $ printf
                   "Invalid query path. Expected hash or tx, got %s" (show p)
 
-      RequestInitChain _ -> return def
+      RequestInitChain _ _ -> return def
       RequestBeginBlock _ _ _ _ -> return def
       RequestEndBlock _ -> return def
 

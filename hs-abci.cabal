@@ -23,6 +23,10 @@ library
     , Network.ABCI.Internal.Wire
   other-modules:
       Proto.Network.ABCI.Types
+      Proto.Github.Com.Gogo.Protobuf.Gogoproto.Gogo
+      Proto.Github.Com.Tendermint.Tmlibs.Common.Types
+      Proto.Google.Protobuf.Descriptor
+
   build-depends:
       base >= 4.7 && < 5
     , binary

@@ -140,7 +140,8 @@ data Request (t :: MsgType) where
     } -> Request Query
 
   RequestInitChain ::
-    { requestInitChain'validators :: ![Proto.Validator]
+    { requestInitChain'validators    :: ![Proto.Validator]
+    , requestInitChain'appStateBytes :: !ByteString
     } -> Request InitChain
 
   RequestBeginBlock ::
@@ -179,6 +180,7 @@ data Response (t :: MsgType) where
   ResponseSetOption ::
     { responseSetOption'code :: !CodeType
     , responseSetOption'log  :: !Text
+    , responseSetOption'info :: !Text
     } -> Response SetOption
 
 {-
@@ -209,27 +211,29 @@ data ResponseDeliverTx = ResponseDeliverTx{_ResponseDeliverTx'code
     } -> Response DeliverTx
 
   ResponseCheckTx ::
-    { responseCheckTx'code :: !CodeType
-    , responseCheckTx'data :: !ByteString
-    , responseCheckTx'log  :: !Text
-    , responseCheckTx'gas  :: !Int64
-    , responseCheckTx'fee  :: !Int64
+    { responseCheckTx'code      :: !CodeType
+    , responseCheckTx'data      :: !ByteString
+    , responseCheckTx'log       :: !Text
+    , responseCheckTx'info      :: !Text
+    , responseCheckTx'gasWanted :: !Int64
+    , responseCheckTx'gasUsed   :: !Int64
+    , responseCheckTx'tags      :: ![Proto.KVPair]
+    , responseCheckTx'fee       :: !(Maybe Proto.KI64Pair)
     } -> Response CheckTx
 
   ResponseCommit ::
-    { responseCommit'code :: !CodeType
-    , responseCommit'data :: !ByteString
-    , responseCommit'log  :: !Text
+    { responseCommit'data :: !ByteString
     } -> Response Commit
 
   ResponseQuery ::
     { responseQuery'code   :: !CodeType
+    , responseQuery'log    :: !Text
+    , responseQuery'info   :: !Text
     , responseQuery'index  :: !Int64
     , responseQuery'key    :: !ByteString
     , responseQuery'value  :: !ByteString
     , responseQuery'proof  :: !ByteString
     , responseQuery'height :: !Int64
-    , responseQuery'log    :: !Text
     } -> Response Query
 
   ResponseInitChain :: Response InitChain
@@ -250,10 +254,10 @@ instance Default (Response Info) where
   def = ResponseInfo "" "" 0 ""
 
 instance Default (Response SetOption) where
-  def = ResponseSetOption def ""
+  def = ResponseSetOption def "" ""
 
 instance Default (Response Query) where
-  def = ResponseQuery def def "" "" "" 0 ""
+  def = ResponseQuery def "" "" 0 "" "" "" 0
 
 instance Default (Response InitChain) where
   def = ResponseInitChain
@@ -304,16 +308,16 @@ toProtoResponse ResponseFlush =
   def & Proto.flush .~ Proto.ResponseFlush
 toProtoResponse (ResponseInfo d v h ah) =
   def & Proto.info .~ Proto.ResponseInfo d v h ah
-toProtoResponse (ResponseSetOption (CodeType code') log') =
-  def & Proto.setOption .~ Proto.ResponseSetOption code' log'
-toProtoResponse (ResponseDeliverTx (CodeType code) data'' log' info' gasWanted' gasUsed' tags' fee') =
-  def & Proto.deliverTx .~ Proto.ResponseDeliverTx (CodeType code) data'' log' info' gasWanted' gasUsed' tags' fee'
-toProtoResponse (ResponseCheckTx (CodeType code) data'' log' gas' fee') =
-  def & Proto.checkTx .~ Proto.ResponseCheckTx code data'' log' gas' fee'
-toProtoResponse (ResponseCommit (CodeType code) data'' log') =
-  def & Proto.commit .~ Proto.ResponseCommit code data'' log'
-toProtoResponse (ResponseQuery (CodeType c) i k v p h l) =
-  def & Proto.query .~ Proto.ResponseQuery c i k v p h l
+toProtoResponse (ResponseSetOption (CodeType code') log' info') =
+  def & Proto.setOption .~ Proto.ResponseSetOption code' log' info'
+toProtoResponse (ResponseDeliverTx (CodeType code') data'' log' info' gasWanted' gasUsed' tags' fee') =
+  def & Proto.deliverTx .~ Proto.ResponseDeliverTx code' data'' log' info' gasWanted' gasUsed' tags' fee'
+toProtoResponse (ResponseCheckTx (CodeType code') data'' log' info' gasWanted' gasUsed' tags' fee') =
+  def & Proto.checkTx .~ Proto.ResponseCheckTx code' data'' log' info' gasWanted' gasUsed' tags' fee'
+toProtoResponse (ResponseCommit data'') =
+  def & Proto.commit .~ Proto.ResponseCommit data''
+toProtoResponse (ResponseQuery (CodeType c) l i x k v p h) =
+  def & Proto.query .~ Proto.ResponseQuery c l i x k v p h
 toProtoResponse ResponseInitChain =
   def & Proto.initChain .~ Proto.ResponseInitChain
 toProtoResponse ResponseBeginBlock =
@@ -343,7 +347,7 @@ withProtoRequest r f
   | Just (Proto.RequestCheckTx tx)        <- r^.Proto.maybe'checkTx    = f (Just (RequestCheckTx tx))
   | Just (Proto.RequestCommit)            <- r^.Proto.maybe'commit     = f (Just RequestCommit)
   | Just (Proto.RequestQuery d p h pr)    <- r^.Proto.maybe'query      = f (Just (RequestQuery d p h pr))
-  | Just (Proto.RequestInitChain vs)      <- r^.Proto.maybe'initChain  = f (Just (RequestInitChain vs))
+  | Just (Proto.RequestInitChain vs asb)  <- r^.Proto.maybe'initChain  = f (Just (RequestInitChain vs asb))
   | Just (Proto.RequestBeginBlock ah hdr av bv) <- r^.Proto.maybe'beginBlock = f (Just (RequestBeginBlock ah hdr av bv))
   | Just (Proto.RequestEndBlock h)        <- r^.Proto.maybe'endBlock   = f (Just (RequestEndBlock h))
   | otherwise                                                          = f Nothing
